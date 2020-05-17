@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/css;charset=utf-8">
+<!--the graph is designed by Dongfang Zhao at 2020.5.11-->
+<div class="chart-container" style="position: relative; height:450px; width:600px">
+	<canvas id="myChart" width =300 height=200></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/jquery.csv.js"></script>
+<script type="text/javascript">
+	var temp_data;
+	      $.ajax({
+	          type : "GET",
+	          url: "data/place_rainfall_dataset.csv",
+	          dataType: "text",
+	          async:false,   
+	          success: function(response)  
+	          {
+	            temp_data = $.csv.toObjects(response);
+	          }   
+	        });
+	var month = []
+	var avg_rainfall = []
+	function filterByPlace(data, name) {
+	    var filter_data = data.filter(item => item.attraction == name);
+	    filter_data.forEach(function(d){
+	    	month.push(d.month)
+	    	avg_rainfall.push(Math.round(d.avg_rainfall))
+	    });
+	}
+	console.log(avg_rainfall)
+	var one_place_data = filterByPlace(temp_data,'Mount Buller')
+	var ctx = document.getElementById('myChart').getContext('2d');
+	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'bar',
+	    // Configuration options go here
+	     data: {
+	     	labels: month,
+	     	datasets: [{
+	     		label: 'Average rainfall(mm)',
+	            backgroundColor: 'rgba(1, 104, 183, 0.5)',
+	            hoverBackgroundColor: 'rgba(9, 90, 160, 0.5)',
+	            borderWidth: 1,
+	            borderColor: 'rgba(1, 73, 132, 0.8)',
+	            hoverBorderWidth: 2,
+            	data: avg_rainfall
+        	}
+        	],
+        	labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+	     },
+		options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    suggestedMin: 0
+		                }
+		            }]
+		        }
+		    }
+	});
+</script>
