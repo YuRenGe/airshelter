@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/css;charset=utf-8">
+<!--the graph is designed by Dongfang Zhao at 2020.5.11-->
+<div class="chart-container" style="position: relative; height:450px; width:600px">
+	<canvas id="myChart" width =300 height=200></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/jquery.csv.js"></script>
+<script type="text/javascript">
+	var uv_data;
+	      $.ajax({
+	          type : "GET",
+	          url: "data/uv_index_monthly.csv",
+	          dataType: "text",
+	          async:false,   
+	          success: function(response)  
+	          {
+	            uv_data = $.csv.toObjects(response);
+	          }   
+	        });
+	var month = []
+	var avg_max_uv = []
+	var avg_mean_uv = []
+	uv_data.forEach(function(d){
+		avg_max_uv.push(Math.round(d.uv_month_avg_max))
+		avg_mean_uv.push(Math.round(d.uv_month_avg_mean))
+	});
+	// function filterByPlace(data, name) {
+	//     var filter_data = data.filter(item => item.attraction == name);
+	//     filter_data.forEach(function(d){
+	//     	month.push(d.month)
+	//     	avg_rainfall.push(Math.round(d.avg_rainfall))
+	//     });
+	// }
+	var ctx = document.getElementById('myChart').getContext('2d');
+	window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(51, 204, 51)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	var chart = new Chart(ctx, {
+	    type: 'bar',
+	     data: {
+	     	labels: month,
+	     	datasets: [{
+	     		label: 'Average UV',
+	            backgroundColor: ["rgba(228, 39, 33, 0.8)", "rgba(228, 39, 33, 0.8)", "rgba(236, 135, 2, 0.8)", "rgba(253, 243, 1, 0.8)", "rgba(0, 144, 61, 0.8)", "rgba(0, 144, 61, 0.8)",'rgba(0, 144, 61, 0.8)','rgba(0, 144, 61, 0.8)','rgba(253, 243, 1, 0.8)','rgba(253, 243, 1, 0.8)','rgba(236, 135, 2, 0.8)','rgba(228, 39, 33, 0.8)'],
+	            hoverBackgroundColor: 'rgba(121, 48, 120, 0.8)',
+	            borderWidth: 1,
+	            borderColor: 'rgba(98, 48, 99, 1)',
+	            hoverBorderWidth: 2,
+            	data: avg_max_uv
+        	}
+        	],
+        	labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+	     },
+		options: {
+			    legend: {
+			        display: false
+			    },
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    suggestedMin: 0
+		                }
+		            }]
+		        },
+		        backgroundRules: [{
+	                    backgroundColor: 'rgba(0, 144, 61, 0.3)', 
+	                    yAxisSegement: 2.99
+	                }, {
+	                    backgroundColor: 'rgba(253, 243, 1, 0.3)',
+	                    yAxisSegement: 5.99
+	                }, {
+	                    backgroundColor: 'rgba(236, 135, 2, 0.3)',
+	                    yAxisSegement: 7.99
+                },{
+	                    backgroundColor: 'rgba(228, 39, 33, 0.3)',
+	                    yAxisSegement: 10.99
+                },{
+	                    backgroundColor: 'rgba(151, 39, 139, 0.3)',
+	                    yAxisSegement: 13
+                }],
+		    },
+		plugins: [{
+                beforeDraw: function (chart) {
+                    var rules = chart.chart.options.backgroundRules;
+                    var ctx = chart.chart.ctx;
+                    var yAxis = chart.chart.scales["y-axis-0"];
+                    var xaxis = chart.chart.scales["x-axis-0"];
+                    for (var i = 0; i < rules.length; ++i) {
+                        var yAxisSegement = (rules[i].yAxisSegement > yAxis.ticksAsNumbers[0] ? yAxis.ticksAsNumbers[0] : rules[i].yAxisSegement);
+                        var yAxisPosStart = yAxis.height - ((yAxisSegement * yAxis.height) / yAxis.ticksAsNumbers[0]) + chart.chart.controller.chartArea.top;
+                        var yAxisPosEnd = (i === 0 ? yAxis.height : yAxis.height - ((rules[i - 1].yAxisSegement * yAxis.height) / yAxis.ticksAsNumbers[0]));
+                        ctx.fillStyle = rules[i].backgroundColor;
+                        ctx.fillRect(xaxis.left, yAxisPosStart, xaxis.width, yAxisPosEnd - yAxisPosStart + chart.chart.controller.chartArea.top);
+                    }
+                }
+            }]
+	});
+</script>
