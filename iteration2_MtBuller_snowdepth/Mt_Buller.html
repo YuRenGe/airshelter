@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/css;charset=utf-8">
+<!--the graph is designed by Dongfang Zhao at 2020.5.11-->
+<div class="chart-container" style="position: relative; height:450px; width:600px">
+	<canvas id="myChart" width =300 height=200></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/jquery.csv.js"></script>
+<script type="text/javascript">
+	var uv_data;
+	      $.ajax({
+	          type : "GET",
+	          url: "data/snow_depth.csv",
+	          dataType: "text",
+	          async:false,   
+	          success: function(response)  
+	          {
+	            uv_data = $.csv.toObjects(response);
+	          }   
+	        });
+	var date = []
+	var nature_depth = []
+	var avg_depth_in_snow_making_area = []
+	uv_data.forEach(function(d){
+		date.push(d.date);
+		nature_depth.push(Math.round(d.Nature));
+		avg_depth_in_snow_making_area.push(Math.round(d.Average_depth_in_snow_making_area))
+	});
+	console.log(date)
+	console.log(nature_depth)
+	// function filterByPlace(data, name) {
+	//     var filter_data = data.filter(item => item.attraction == name);
+	//     filter_data.forEach(function(d){
+	//     	month.push(d.month)
+	//     	avg_rainfall.push(Math.round(d.avg_rainfall))
+	//     });
+	// }
+	var ctx = document.getElementById('myChart').getContext('2d');
+	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	var chart = new Chart(ctx, {
+	    type: 'line',
+	     data: {
+	     	labels: date,
+	     	datasets: [{
+	     		label: 'Snow Depth(cm): ',
+	            backgroundColor: "rgba(185,225,255,0.4)",
+	            hoverBackgroundColor: 'rgba(166, 217, 255, 1)',
+	            borderWidth: 1,
+	            borderColor: 'rgba(128, 200, 255, 1)',
+	            hoverBorderWidth: 2,
+            	data: nature_depth
+        	}
+        	],
+        	labels: date,
+	     },
+		options: {
+			    legend: {
+			        display: false
+			    },
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    suggestedMin: 0,
+		                },
+		                scaleLabel: {
+					        display: true,
+					        labelString: 'Snow Depth(cm)'
+					      }
+		            }]
+		        }
+		    },
+	});
+</script>
