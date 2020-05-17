@@ -1,0 +1,249 @@
+<html><head>
+<meta charset="utf-8">
+<title>Display a popup on hover</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet">
+<style>
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+.mapboxgl-popup {
+max-width: 400px;
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+</style>
+<div id="map" class="mapboxgl-map"><div class="mapboxgl-canary" style="visibility: hidden;"></div><div class="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan mapboxgl-touch-zoom-rotate"><canvas class="mapboxgl-canvas" tabindex="0" aria-label="Map" width="1692" height="1326" style="width: 1346px; height: 663px;"></canvas></div><div class="mapboxgl-control-container"><div class="mapboxgl-ctrl-top-left"></div><div class="mapboxgl-ctrl-top-right"></div><div class="mapboxgl-ctrl-bottom-left"><div class="mapboxgl-ctrl" style="display: block;"><a class="mapboxgl-ctrl-logo" target="_blank" rel="noopener nofollow" href="https://www.mapbox.com/" aria-label="Mapbox logo"></a></div></div><div class="mapboxgl-ctrl-bottom-right"><div class="mapboxgl-ctrl mapboxgl-ctrl-attrib mapboxgl-compact"><div class="mapboxgl-ctrl-attrib-inner"><a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> <a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap</a> <a class="mapbox-improve-map" href="https://apps.mapbox.com/feedback/?owner=mapbox&amp;id=streets-v11&amp;access_token=pk.eyJ1Ijoiam9obm55bWEiLCJhIjoiY2sxc3A4eW13MGlkeTNscTJlcW0wNWVhdCJ9.FKS51OVBKJ3TlugZ56Sumw" target="_blank" rel="noopener nofollow">Improve this map</a></div></div></div></div><div class="mapboxgl-canary" style="visibility: hidden;"></div><div class="mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan mapboxgl-touch-zoom-rotate"><canvas class="mapboxgl-canvas" tabindex="0" aria-label="Map" width="692" height="1326" style="width: 346px; height: 663px;"></canvas></div><div class="mapboxgl-control-container"><div class="mapboxgl-ctrl-top-left"></div><div class="mapboxgl-ctrl-top-right"><div class="mapboxgl-ctrl mapboxgl-ctrl-group"><button class="mapboxgl-ctrl-zoom-in" type="button" title="Zoom in" aria-label="Zoom in"><span class="mapboxgl-ctrl-icon" aria-hidden="true"></span></button><button class="mapboxgl-ctrl-zoom-out" type="button" title="Zoom out" aria-label="Zoom out"><span class="mapboxgl-ctrl-icon" aria-hidden="true"></span></button><button class="mapboxgl-ctrl-compass" type="button" title="Reset bearing to north" aria-label="Reset bearing to north"><span class="mapboxgl-ctrl-icon" aria-hidden="true" style="transform: rotate(0deg);"></span></button></div></div><div class="mapboxgl-ctrl-bottom-left"><div class="mapboxgl-ctrl" style="display: block;"><a class="mapboxgl-ctrl-logo" target="_blank" rel="noopener nofollow" href="https://www.mapbox.com/" aria-label="Mapbox logo"></a></div></div><div class="mapboxgl-ctrl-bottom-right"><div class="mapboxgl-ctrl mapboxgl-ctrl-attrib mapboxgl-compact"><div class="mapboxgl-ctrl-attrib-inner"><a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> <a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap</a> <a class="mapbox-improve-map" href="https://apps.mapbox.com/feedback/?owner=mapbox&amp;id=streets-v11&amp;access_token=pk.eyJ1Ijoiam9obm55bWEiLCJhIjoiY2sxc3A4eW13MGlkeTNscTJlcW0wNWVhdCJ9.FKS51OVBKJ3TlugZ56Sumw" target="_blank" rel="noopener nofollow">Improve this map</a></div></div></div></div></div>
+<script>
+	// TO MAKE THE MAP APPEAR YOU MUST
+	// ADD YOUR ACCESS TOKEN FROM
+	// https://account.mapbox.com
+	mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obm55bWEiLCJhIjoiY2sxc3A4eW13MGlkeTNscTJlcW0wNWVhdCJ9.FKS51OVBKJ3TlugZ56Sumw';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [144.74, -37.407],
+zoom: 6.75
+});
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+
+map.on('load', function() {
+map.addSource('places', {
+'type': 'geojson',
+'data': {
+'type': 'FeatureCollection',
+'features': [
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Yarra Valley</strong><p>Popularity: ⭐️⭐️⭐️</p><p>Distance from CBD:  25 km.</p>',
+'icon': 'park'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [145.510314941, -37.656528473]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Grampians </strong><p>Popularity: ⭐️⭐️⭐️</p><p>Distance from CBD:  258.5 km.</p>',
+'icon': 'mountain'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [142.3932, -37.2047]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Phillip Island </strong><p>Popularity: ⭐️⭐️⭐️</p><p>Distance from CBD:  142km.</p>',
+'icon': 'harbor'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [145.23102, -38.48349]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Mornington Peninsula</strong><p>Popularity: ⭐️⭐️⭐️️⭐️️⭐️</p><p>Distance from CBD: 42km.</p>',
+'icon': 'bar'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [145.093449, -38.285405]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>St kilda beach </strong><p>Popularity: ⭐️⭐️⭐️️⭐️️⭐️</p><p>Distance from CBD : 9km.</p>',
+'icon': 'restaurant'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [144.9820, -37.86405]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Brighton beach </strong><p>Popularity: ⭐️⭐️⭐️️⭐️️⭐️</p><p>Distance from CBD:  13.3km.</p>',
+'icon': 'beach'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [144.986160278, -37.916793823]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Great Ocean Road</strong><p>Popularity: ⭐️⭐️⭐️️⭐️️⭐️</p><p>Distance from CBD :209.8km.</p>',
+'icon': 'aquarium'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [143.102979, -38.664574]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Murray River</strong><p>Popularity: ⭐️⭐️️</p><p>Distance from CBD:347.2km.</p>',
+'icon': 'aquarium'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [145.093449, -36.003882]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Ballarat</strong><p>Popularity: ⭐️⭐️️</p><p>Distance from CBD:72km.</p>',
+'icon': 'garden'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [143.8671868, -37.5636495]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Daylesford</strong><p>Popularity: ⭐️⭐️⭐️️</p><p>Distance from CBD: 113km.</p>',
+'icon': 'garden'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [144.14226159999998, -37.3439242]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Gippsland lakes </strong><p>Popularity: ⭐️️⭐⭐️️️</p><p>Distance from CBD: 276.5 km.</p>',
+'icon': 'swimming'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [147.65, -38]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Dandenong Range</strong><p>Popularity: ⭐️️⭐⭐️️️</p><p>Distance from CBD:42.3 km.</p>',
+'icon': 'park'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [145.368630000, -38.098730000]
+}
+},
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Mount Buller</strong><p>Popularity: ⭐️⭐️⭐️⭐️️</p><p>Distance from CBD: 256.4km.</p>',
+'icon': 'mountain'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [146.454196, -37.132552]
+}
+}
+]
+}
+});
+ 
+// Add a layer showing the places.
+map.addLayer({
+'id': 'places',
+'type': 'symbol',
+'source': 'places',
+'layout': {
+'icon-image': '{icon}-15',
+'icon-size': 2.5,
+'icon-allow-overlap': true
+}
+});
+ 
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+closeButton: false,
+closeOnClick: false
+});
+ 
+map.on('mouseenter', 'places', function(e) {
+// Change the cursor style as a UI indicator.
+map.getCanvas().style.cursor = 'pointer';
+ 
+var coordinates = e.features[0].geometry.coordinates.slice();
+var description = e.features[0].properties.description;
+ 
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+}
+ 
+// Populate the popup and set its coordinates
+// based on the feature found.
+popup
+.setLngLat(coordinates)
+.setHTML(description)
+.addTo(map);
+});
+ 
+map.on('mouseleave', 'places', function() {
+map.getCanvas().style.cursor = '';
+popup.remove();
+});
+});
+</script>
+ 
+
+</body></html>
