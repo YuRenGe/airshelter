@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/css;charset=utf-8">
+<!--the graph is designed by Dongfang Zhao at 2020.5.11-->
+<div class="chart-container" style="position: relative; height:450px; width:600px">
+	<canvas id="myChart" width =300 height=200></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/jquery.csv.js"></script>
+<script type="text/javascript">
+	var temp_data;
+	      $.ajax({
+	          type : "GET",
+	          url: "data/place_temperature_dataset.csv",
+	          dataType: "text",
+	          async:false,   
+	          success: function(response)  
+	          {
+	            temp_data = $.csv.toObjects(response);
+	          }   
+	        });
+	var month = []
+	var avg_max_temp = []
+	var avg_min_temp = []
+	function filterByPlace(data, name) {
+	    var filter_data = data.filter(item => item.place == name);
+	    filter_data.forEach(function(d){
+	    	month.push(d.month)
+	    	avg_max_temp.push(d.avg_max_temp)
+	    	avg_min_temp.push(d.avg_min_temp)
+	    });
+	}
+	console.log(avg_max_temp)
+	var one_place_data = filterByPlace(temp_data,'Yarra Valley')
+	var ctx = document.getElementById('myChart').getContext('2d');
+	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'bar',
+	    // Configuration options go here
+	     data: {
+	     	labels: month,
+	     	datasets: [{
+	     		label: 'Average maximum temperature',
+	            backgroundColor: 'rgba(255, 187, 0, 0.5)',
+	            hoverBackgroundColor: 'rgba(252, 143, 0, 0.5)',
+	            borderWidth: 1,
+	            borderColor: 'rgba(251, 81, 6, 0.8)',
+	            hoverBorderWidth: 2,
+            	data: avg_max_temp
+        	},{
+        		label: 'Average minimum temperature',
+	            backgroundColor: 'rgba(0, 130, 214, 0.5)',
+	            hoverBackgroundColor: 'rgba(0, 112, 220, 0.5)',
+	            borderWidth: 1,
+	            borderColor: 'rgba(8, 49, 157, 0.8)',
+	            hoverBorderWidth: 2,
+	            data: avg_min_temp
+        	}
+        	],
+        	labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+	     },
+		options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    suggestedMin: 0
+		                }
+		            }]
+		        },
+		        tooltips: {
+		        	custom: function(tooltip) {
+		              if (!tooltip) return;
+		              tooltip.displayColors = false;
+		            },
+		            callbacks: {
+		                label: function(tooltipItem, data) {
+		                    var max_label = "Avg Max:  " + data.datasets[0].data[tooltipItem.index]+" ℃";
+		                    var min_label = "Avg Min:  " + data.datasets[1].data[tooltipItem.index]+" ℃";
+		                    return [max_label,min_label];
+		                }
+		            }
+		        }
+		    }
+	});
+</script>

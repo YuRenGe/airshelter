@@ -1,0 +1,169 @@
+station_code,month,lat,lng,station_name,avg_max_temp,avg_min_temp,place
+85072,1,-38.12,147.13,Sale,25.0,13.0,Gippsland lakes
+85072,2,-38.12,147.13,Sale,25.0,13.0,Gippsland lakes
+85072,3,-38.12,147.13,Sale,24.0,12.0,Gippsland lakes
+85072,4,-38.12,147.13,Sale,20.0,9.0,Gippsland lakes
+85072,5,-38.12,147.13,Sale,17.0,6.0,Gippsland lakes
+85072,6,-38.12,147.13,Sale,14.0,4.0,Gippsland lakes
+85072,7,-38.12,147.13,Sale,14.0,3.0,Gippsland lakes
+85072,8,-38.12,147.13,Sale,15.0,4.0,Gippsland lakes
+85072,9,-38.12,147.13,Sale,17.0,6.0,Gippsland lakes
+85072,10,-38.12,147.13,Sale,19.0,8.0,Gippsland lakes
+85072,11,-38.12,147.13,Sale,21.0,10.0,Gippsland lakes
+85072,12,-38.12,147.13,Sale,23.0,11.0,Gippsland lakes
+86338,1,-37.83,144.98,Melbourne,26.0,16.0,St kilda
+86338,2,-37.83,144.98,Melbourne,26.0,17.0,St kilda
+86338,3,-37.83,144.98,Melbourne,24.0,15.0,St kilda
+86338,4,-37.83,144.98,Melbourne,21.0,12.0,St kilda
+86338,5,-37.83,144.98,Melbourne,18.0,11.0,St kilda
+86338,6,-37.83,144.98,Melbourne,15.0,8.0,St kilda
+86338,7,-37.83,144.98,Melbourne,15.0,8.0,St kilda
+86338,8,-37.83,144.98,Melbourne,15.0,8.0,St kilda
+86338,9,-37.83,144.98,Melbourne,18.0,10.0,St kilda
+86338,10,-37.83,144.98,Melbourne,21.0,11.0,St kilda
+86338,11,-37.83,144.98,Melbourne,22.0,12.0,St kilda
+86338,12,-37.83,144.98,Melbourne,25.0,15.0,St kilda
+86338,1,-37.83,144.98,Melbourne,26.0,16.0,Brighton Beach
+86338,2,-37.83,144.98,Melbourne,26.0,17.0,Brighton Beach
+86338,3,-37.83,144.98,Melbourne,24.0,15.0,Brighton Beach
+86338,4,-37.83,144.98,Melbourne,21.0,12.0,Brighton Beach
+86338,5,-37.83,144.98,Melbourne,18.0,11.0,Brighton Beach
+86338,6,-37.83,144.98,Melbourne,15.0,8.0,Brighton Beach
+86338,7,-37.83,144.98,Melbourne,15.0,8.0,Brighton Beach
+86338,8,-37.83,144.98,Melbourne,15.0,8.0,Brighton Beach
+86338,9,-37.83,144.98,Melbourne,18.0,10.0,Brighton Beach
+86338,10,-37.83,144.98,Melbourne,21.0,11.0,Brighton Beach
+86338,11,-37.83,144.98,Melbourne,22.0,12.0,Brighton Beach
+86338,12,-37.83,144.98,Melbourne,25.0,15.0,Brighton Beach
+78015,1,-36.31,141.65,Nhill,31.0,14.0,Grampians
+78015,2,-36.31,141.65,Nhill,31.0,13.0,Grampians
+78015,3,-36.31,141.65,Nhill,27.0,11.0,Grampians
+78015,4,-36.31,141.65,Nhill,23.0,9.0,Grampians
+78015,5,-36.31,141.65,Nhill,18.0,7.0,Grampians
+78015,6,-36.31,141.65,Nhill,15.0,5.0,Grampians
+78015,7,-36.31,141.65,Nhill,14.0,4.0,Grampians
+78015,8,-36.31,141.65,Nhill,16.0,5.0,Grampians
+78015,9,-36.31,141.65,Nhill,18.0,6.0,Grampians
+78015,10,-36.31,141.65,Nhill,23.0,7.0,Grampians
+78015,11,-36.31,141.65,Nhill,27.0,10.0,Grampians
+78015,12,-36.31,141.65,Nhill,29.0,12.0,Grampians
+86338,1,-37.83,144.98,Melbourne,26.0,16.0,Dandenong ranges
+86338,2,-37.83,144.98,Melbourne,26.0,17.0,Dandenong ranges
+86338,3,-37.83,144.98,Melbourne,24.0,15.0,Dandenong ranges
+86338,4,-37.83,144.98,Melbourne,21.0,12.0,Dandenong ranges
+86338,5,-37.83,144.98,Melbourne,18.0,11.0,Dandenong ranges
+86338,6,-37.83,144.98,Melbourne,15.0,8.0,Dandenong ranges
+86338,7,-37.83,144.98,Melbourne,15.0,8.0,Dandenong ranges
+86338,8,-37.83,144.98,Melbourne,15.0,8.0,Dandenong ranges
+86338,9,-37.83,144.98,Melbourne,18.0,10.0,Dandenong ranges
+86338,10,-37.83,144.98,Melbourne,21.0,11.0,Dandenong ranges
+86338,11,-37.83,144.98,Melbourne,22.0,12.0,Dandenong ranges
+86338,12,-37.83,144.98,Melbourne,25.0,15.0,Dandenong ranges
+86338,1,-37.83,144.98,Melbourne,26.0,16.0,Main Melbourne
+86338,2,-37.83,144.98,Melbourne,26.0,17.0,Main Melbourne
+86338,3,-37.83,144.98,Melbourne,24.0,15.0,Main Melbourne
+86338,4,-37.83,144.98,Melbourne,21.0,12.0,Main Melbourne
+86338,5,-37.83,144.98,Melbourne,18.0,11.0,Main Melbourne
+86338,6,-37.83,144.98,Melbourne,15.0,8.0,Main Melbourne
+86338,7,-37.83,144.98,Melbourne,15.0,8.0,Main Melbourne
+86338,8,-37.83,144.98,Melbourne,15.0,8.0,Main Melbourne
+86338,9,-37.83,144.98,Melbourne,18.0,10.0,Main Melbourne
+86338,10,-37.83,144.98,Melbourne,21.0,11.0,Main Melbourne
+86338,11,-37.83,144.98,Melbourne,22.0,12.0,Main Melbourne
+86338,12,-37.83,144.98,Melbourne,25.0,15.0,Main Melbourne
+85072,1,-38.12,147.13,Sale,25.0,13.0,Mount Buller
+85072,2,-38.12,147.13,Sale,25.0,13.0,Mount Buller
+85072,3,-38.12,147.13,Sale,24.0,12.0,Mount Buller
+85072,4,-38.12,147.13,Sale,20.0,9.0,Mount Buller
+85072,5,-38.12,147.13,Sale,17.0,6.0,Mount Buller
+85072,6,-38.12,147.13,Sale,14.0,4.0,Mount Buller
+85072,7,-38.12,147.13,Sale,14.0,3.0,Mount Buller
+85072,8,-38.12,147.13,Sale,15.0,4.0,Mount Buller
+85072,9,-38.12,147.13,Sale,17.0,6.0,Mount Buller
+85072,10,-38.12,147.13,Sale,19.0,8.0,Mount Buller
+85072,11,-38.12,147.13,Sale,21.0,10.0,Mount Buller
+85072,12,-38.12,147.13,Sale,23.0,11.0,Mount Buller
+90015,1,-38.86,143.51,Cape Otway,21.0,13.0,Greate Ocean Road
+90015,2,-38.86,143.51,Cape Otway,21.0,14.0,Greate Ocean Road
+90015,3,-38.86,143.51,Cape Otway,20.0,13.0,Greate Ocean Road
+90015,4,-38.86,143.51,Cape Otway,18.0,12.0,Greate Ocean Road
+90015,5,-38.86,143.51,Cape Otway,16.0,10.0,Greate Ocean Road
+90015,6,-38.86,143.51,Cape Otway,14.0,8.0,Greate Ocean Road
+90015,7,-38.86,143.51,Cape Otway,13.0,8.0,Greate Ocean Road
+90015,8,-38.86,143.51,Cape Otway,14.0,8.0,Greate Ocean Road
+90015,9,-38.86,143.51,Cape Otway,15.0,9.0,Greate Ocean Road
+90015,10,-38.86,143.51,Cape Otway,17.0,10.0,Greate Ocean Road
+90015,11,-38.86,143.51,Cape Otway,18.0,11.0,Greate Ocean Road
+90015,12,-38.86,143.51,Cape Otway,20.0,12.0,Greate Ocean Road
+87031,1,-37.86,144.76,Laverton,26.0,14.0,Ballarat
+87031,2,-37.86,144.76,Laverton,26.0,14.0,Ballarat
+87031,3,-37.86,144.76,Laverton,24.0,13.0,Ballarat
+87031,4,-37.86,144.76,Laverton,20.0,10.0,Ballarat
+87031,5,-37.86,144.76,Laverton,17.0,8.0,Ballarat
+87031,6,-37.86,144.76,Laverton,14.0,6.0,Ballarat
+87031,7,-37.86,144.76,Laverton,14.0,5.0,Ballarat
+87031,8,-37.86,144.76,Laverton,15.0,6.0,Ballarat
+87031,9,-37.86,144.76,Laverton,17.0,7.0,Ballarat
+87031,10,-37.86,144.76,Laverton,19.0,8.0,Ballarat
+87031,11,-37.86,144.76,Laverton,22.0,10.0,Ballarat
+87031,12,-37.86,144.76,Laverton,24.0,12.0,Ballarat
+86338,1,-37.83,144.98,Melbourne,26.0,16.0,Phillip Island
+86338,2,-37.83,144.98,Melbourne,26.0,17.0,Phillip Island
+86338,3,-37.83,144.98,Melbourne,24.0,15.0,Phillip Island
+86338,4,-37.83,144.98,Melbourne,21.0,12.0,Phillip Island
+86338,5,-37.83,144.98,Melbourne,18.0,11.0,Phillip Island
+86338,6,-37.83,144.98,Melbourne,15.0,8.0,Phillip Island
+86338,7,-37.83,144.98,Melbourne,15.0,8.0,Phillip Island
+86338,8,-37.83,144.98,Melbourne,15.0,8.0,Phillip Island
+86338,9,-37.83,144.98,Melbourne,18.0,10.0,Phillip Island
+86338,10,-37.83,144.98,Melbourne,21.0,11.0,Phillip Island
+86338,11,-37.83,144.98,Melbourne,22.0,12.0,Phillip Island
+86338,12,-37.83,144.98,Melbourne,25.0,15.0,Phillip Island
+86338,1,-37.83,144.98,Melbourne,26.0,16.0,Yarra Valley
+86338,2,-37.83,144.98,Melbourne,26.0,17.0,Yarra Valley
+86338,3,-37.83,144.98,Melbourne,24.0,15.0,Yarra Valley
+86338,4,-37.83,144.98,Melbourne,21.0,12.0,Yarra Valley
+86338,5,-37.83,144.98,Melbourne,18.0,11.0,Yarra Valley
+86338,6,-37.83,144.98,Melbourne,15.0,8.0,Yarra Valley
+86338,7,-37.83,144.98,Melbourne,15.0,8.0,Yarra Valley
+86338,8,-37.83,144.98,Melbourne,15.0,8.0,Yarra Valley
+86338,9,-37.83,144.98,Melbourne,18.0,10.0,Yarra Valley
+86338,10,-37.83,144.98,Melbourne,21.0,11.0,Yarra Valley
+86338,11,-37.83,144.98,Melbourne,22.0,12.0,Yarra Valley
+86338,12,-37.83,144.98,Melbourne,25.0,15.0,Yarra Valley
+87031,1,-37.86,144.76,Laverton,26.0,14.0,Shire of Mornington Peninsula
+87031,2,-37.86,144.76,Laverton,26.0,14.0,Shire of Mornington Peninsula
+87031,3,-37.86,144.76,Laverton,24.0,13.0,Shire of Mornington Peninsula
+87031,4,-37.86,144.76,Laverton,20.0,10.0,Shire of Mornington Peninsula
+87031,5,-37.86,144.76,Laverton,17.0,8.0,Shire of Mornington Peninsula
+87031,6,-37.86,144.76,Laverton,14.0,6.0,Shire of Mornington Peninsula
+87031,7,-37.86,144.76,Laverton,14.0,5.0,Shire of Mornington Peninsula
+87031,8,-37.86,144.76,Laverton,15.0,6.0,Shire of Mornington Peninsula
+87031,9,-37.86,144.76,Laverton,17.0,7.0,Shire of Mornington Peninsula
+87031,10,-37.86,144.76,Laverton,19.0,8.0,Shire of Mornington Peninsula
+87031,11,-37.86,144.76,Laverton,22.0,10.0,Shire of Mornington Peninsula
+87031,12,-37.86,144.76,Laverton,24.0,12.0,Shire of Mornington Peninsula
+87031,1,-37.86,144.76,Laverton,26.0,14.0,Daylesford
+87031,2,-37.86,144.76,Laverton,26.0,14.0,Daylesford
+87031,3,-37.86,144.76,Laverton,24.0,13.0,Daylesford
+87031,4,-37.86,144.76,Laverton,20.0,10.0,Daylesford
+87031,5,-37.86,144.76,Laverton,17.0,8.0,Daylesford
+87031,6,-37.86,144.76,Laverton,14.0,6.0,Daylesford
+87031,7,-37.86,144.76,Laverton,14.0,5.0,Daylesford
+87031,8,-37.86,144.76,Laverton,15.0,6.0,Daylesford
+87031,9,-37.86,144.76,Laverton,17.0,7.0,Daylesford
+87031,10,-37.86,144.76,Laverton,19.0,8.0,Daylesford
+87031,11,-37.86,144.76,Laverton,22.0,10.0,Daylesford
+87031,12,-37.86,144.76,Laverton,24.0,12.0,Daylesford
+74258,1,-35.56,144.95,Deniliquin,33.0,17.0,The Murry
+74258,2,-35.56,144.95,Deniliquin,32.0,16.0,The Murry
+74258,3,-35.56,144.95,Deniliquin,28.0,13.0,The Murry
+74258,4,-35.56,144.95,Deniliquin,23.0,9.0,The Murry
+74258,5,-35.56,144.95,Deniliquin,19.0,6.0,The Murry
+74258,6,-35.56,144.95,Deniliquin,15.0,4.0,The Murry
+74258,7,-35.56,144.95,Deniliquin,14.0,3.0,The Murry
+74258,8,-35.56,144.95,Deniliquin,16.0,4.0,The Murry
+74258,9,-35.56,144.95,Deniliquin,20.0,6.0,The Murry
+74258,10,-35.56,144.95,Deniliquin,24.0,8.0,The Murry
+74258,11,-35.56,144.95,Deniliquin,28.0,12.0,The Murry
+74258,12,-35.56,144.95,Deniliquin,30.0,14.0,The Murry
