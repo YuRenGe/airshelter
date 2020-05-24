@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /*setting styles for map and table*/
+      #map {
+       height: 400px;
+       width: 700px;
+       overflow: hidden;
+       float: left;
+       }
+       #recreate_tab {
+       height: 400px;
+       width: 250px;
+       overflow: hidden;
+       float: left;
+       scroll-behavior: smooth;
+       overflow:auto;
+       }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 200;
+        margin-top: 10px;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+        border: 2px solid #8842d5;
+    	border-radius: 5px; 
+      }
+
+      #pac-input:focus {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 200;
+        margin-top: 10px;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+        border: 2px solid #4d90fe;
+        border-radius: 5px; 
+      }
+      /*below is table style*/
+      #tab{
+        border-collapse: collapse;
+        font-size: 0.9em;
+        border-radius: 5px 0 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      }
+
+      #tab #table_header{
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+        padding: 12px 2px;
+      }
+      #tab #odd_row{
+        padding: 12px 2px;
+        font-size: 12px;
+      }
+      #tab #even_row{
+        padding: 12px 2px;
+        background-color: #f3f3f3;
+        font-size: 12px;
+      }
+      #tab tbody tr{
+        border-bottom: 1px solid #dddddd;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/jquery.csv.js"></script>
+  </head>
+  <body>
+  	<input id="pac-input" class="controls" type="text" placeholder="Find the camping site close to you" onFocus="this.value=''">
+<!-- data aquire and extract -->
+    <div id="recreate_tab" scorlling = yes></div>
+    <div id="map"></div>
+    <script>
+      var fire_data;
+      $.ajax({
+          type : "GET",
+          url: "http://ec2-18-217-248-179.us-east-2.compute.amazonaws.com/vic_fire_data.csv",
+          dataType: "text",
+          async:false,   
+          success: function(response)  
+          {
+            fire_data = $.csv.toObjects(response);
+          }   
+        });
+      var recreation_site;
+      $.ajax({
+          type : "GET",
+          url: "http://ec2-18-217-248-179.us-east-2.compute.amazonaws.com/recweb_site_with_air_quality.csv",
+          dataType: "text",
+          async:false,   
+          success: function(response)  
+          {
+            recreation_site = $.csv.toObjects(response);
+          }   
+        });
+      //-----------------------google map api aquire--------------------------
+      var map;
+      function initMap() {
+          //inital map setting
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -36.581373, lng: 144.863053},
+            scaleControl: true,
+            zoom: 7
+          });
+          // This part is used to create heatmap to show the active fire situation
+          // get latitude and longitude from fire data
+          fire_latLng=[]
+          fire_data.forEach(function(d){
+            var lat = d.latitude;
+            var lng = d.longitude;
+            fire_latLng.push(new google.maps.LatLng(lat, lng));
+          });
+          //using fire data lat and lng to create heat map
+          var heatmap = new google.maps.visualization.HeatmapLayer({
+            data: fire_latLng
+          });
+          var gradient = [
+          'rgba(0, 255, 255, 0)',
+          'rgba(127, 0, 63, 1)',
+          'rgba(191, 0, 31, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+          heatmap.set('radius', 7);
+          heatmap.set('gradient', gradient);
+          heatmap.setMap(map);
+        // heat map part is done
+        // This part is use to create camping site marker and their tootips
+        var all_camping_site_markers=[]
+        var pre_infowindow=null;
+        // create marker and information window for camping sites    
+        var camping_site_markers = recreation_site.map(function(location) {
+          	site_position = {"lat":parseFloat(location.LATITUDE),"lng":parseFloat(location.LONGITUDE)}
+          	var contentString = '<div id="content">'+
+  							      '<div id="siteNotice">'+
+  							      '</div>'+
+  							      '<h3 id="firstHeading" class="firstHeading">'+location.NAME+'</h3>'+
+  							      '<div id="bodyContent">'+
+  							      '<p><b>Access Description: </b>'+location.ACCESS_DSC+'</p>'+
+  							      '<p><b>Close status: </b>'+location.CLOS_STAT+'</p>'+
+  							      '<p><b>Close Reason: </b>'+location.CLOS_DESC+'</p>'+
+  							      '<p><b>Air Quality: </b>'+location.AQI+'</p>'+
+  							      '<p><b>Suggestion: </b>'+location.Suggestion+'</p>'+
+  							      '</div>'+
+  							      '</div>';
+            // inital information window and the content is setting above
+            var infowindow = new google.maps.InfoWindow({
+    			    content: contentString
+    			  });
+            // setting map icon
+            var camping_site_marker = new google.maps.Marker({
+                	position:site_position,
+                	map: map,
+                	icon: {
+                    url: 'icon/tents.png',
+                  },
+                	title: location.NAME
+              	});
+            all_camping_site_markers.push(site_position);
+            camping_site_marker.addListener('click', function() {
+                if(pre_infowindow==null){
+                  pre_infowindow = infowindow;
+                }else{
+                  pre_infowindow.close();
+                  infowindow.open(map, camping_site_marker);
+                  pre_infowindow = infowindow
+                }
+    				});
+              	return camping_site_marker
+        });	
+        // due the there are too many camping site in map. Therefore using clusterer to combine it
+        // setting marker for clusterer
+        var mcOptions = {styles:[{
+            height: 37,
+            url: "./marker/marker1.png",
+            width: 32,
+            textColor: "white",
+          }]
+        };
+
+        var markerCluster = new MarkerClusterer(map, camping_site_markers,mcOptions);
+
+
+         // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('click', function() {
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+          var tab=document.getElementById("tab");
+          var trs=tab.getElementsByTagName("tr");
+          for(var i=1;i<trs.length;i++){
+                var tds=trs[i].getElementsByTagName("td");
+                tds[0].style.display='block';
+            };
+        });
+
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user searching for some place
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+          var record_position = 0;
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              return;
+            }
+            // calculating the nearest camping site
+            var distance = 10000;
+            for(i in all_camping_site_markers){
+            	var lat_distance = Math.pow(all_camping_site_markers[i]["lat"] - place.geometry.location.lat(),2);
+            	var lng_distance = Math.pow(all_camping_site_markers[i]["lng"] - place.geometry.location.lng(),2);
+            	var temp_distance = Math.sqrt(lat_distance+lng_distance);
+            	if(temp_distance<distance){
+            		distance = temp_distance
+            		record_position = i
+            	};
+            };
+            nearest_position = new google.maps.LatLng(all_camping_site_markers[record_position]["lat"], all_camping_site_markers[record_position]["lng"]);
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location,
+            }));
+
+            //setting the map boundary according to the research place and nearest camping site
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              if(place.geometry.location.lat()>nearest_position.lat()){
+              	  place.geometry.viewport.Ua["j"] = place.geometry.location.lng();
+	              place.geometry.viewport.Ua["i"] = nearest_position.lng();
+	              place.geometry.viewport.Ya["j"] = place.geometry.location.lat();
+	              place.geometry.viewport.Ya["i"] = nearest_position.lat();
+              }
+              else if(place.geometry.location.lat()<nearest_position.lat()){
+              	  place.geometry.viewport.Ua["j"] = nearest_position.lng();
+	              place.geometry.viewport.Ua["i"] = place.geometry.location.lng();
+	              place.geometry.viewport.Ya["j"] = nearest_position.lat();
+	              place.geometry.viewport.Ya["i"] = place.geometry.location.lat();
+              }
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+              bounds.extend(nearest_position.location);
+            }
+          });
+          map.fitBounds(bounds);
+          // filtering table to display the nearest camping site
+          var tab=document.getElementById("tab");
+          var trs=tab.getElementsByTagName("tr");
+          for(var i=1;i<trs.length;i++){
+                var tds=trs[i].getElementsByTagName("td");
+                if(tds[0].childNodes[0].childNodes[0].data!=recreation_site[record_position].NAME){
+                      tds[0].style.display='none';
+                }else{
+                      tds[0].style.display='block';
+                }
+
+            };
+        });
+        // reate inital table, show all of camping sites
+        var tab=document.createElement("table");
+        tab.id="tab";
+        var row,cell;
+        var headerCell = document.createElement("TH");
+        headerCell.id = "table_header"
+        headerCell.innerHTML = "Camping Sites";
+        row=tab.insertRow(-1);
+        row.appendChild(headerCell);
+        count = 0;
+        recreation_site.forEach(function(d){    
+            if(count%2==0){
+              row=tab.insertRow(-1);        
+              cell=row.insertCell(-1);
+              cell.id = "odd_row"
+              cell.innerHTML="<h3>"+d.NAME+"</h3>"+d.ACCESS_DSC;
+            }else{
+              row=tab.insertRow(-1);        
+              cell=row.insertCell(-1);
+              cell.id = "even_row"
+              cell.innerHTML="<h3>"+d.NAME+"</h3>"+d.ACCESS_DSC;
+            };
+            count = count + 1;
+            });
+        var tab_Div = document.getElementById("recreate_tab");
+        tab_Div.appendChild(tab)
+        // create click action, when user select one camping site, it weill jump to that camping site and display the relative information window
+        var activeInfoWindow = null;
+        $("table#tab").find('tbody tr').each(function(idx) {
+                  var rowNumber=idx;
+                  $(this).on('click', function() {
+                        map.setCenter(camping_site_markers[rowNumber-1].getPosition());
+                        map.setZoom(15);
+                        var contentString = '<div id="content">'+
+                          '<div id="siteNotice">'+
+                          '</div>'+
+                          '<h3 id="firstHeading" class="firstHeading">'+recreation_site[rowNumber-1].NAME+'</h3>'+
+                          '<div id="bodyContent">'+
+                          '<p><b>Access Description: </b>'+recreation_site[rowNumber-1].ACCESS_DSC+'</p>'+
+                          '<p><b>Close status: </b>'+recreation_site[rowNumber-1].CLOS_STAT+'</p>'+
+                          '<p><b>Close Reason: </b>'+recreation_site[rowNumber-1].CLOS_DESC+'</p>'+
+                          '<p><b>Air Quality: </b>'+recreation_site[rowNumber-1].AQI+'</p>'+
+                          '<p><b>Suggestion: </b>'+recreation_site[rowNumber-1].Suggestion+'</p>'+
+                          '</div>'+
+                          '</div>';
+                        var infowindow = new google.maps.InfoWindow({
+                          content: contentString
+                        });
+                        if(activeInfoWindow == null){
+                          activeInfoWindow = infowindow
+                        }else{
+                          activeInfoWindow.close()
+                          activeInfoWindow = infowindow
+                        }
+                        infowindow.open(map, camping_site_markers[rowNumber-1]);
+                  });
+                });
+      }
+      </script>
+		<script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhln26WtzSzywoxlldeG73mqkRvH3c0Y8&libraries=visualization,places&callback=initMap"
+    async defer></script>
+    </body>
+  </html>
