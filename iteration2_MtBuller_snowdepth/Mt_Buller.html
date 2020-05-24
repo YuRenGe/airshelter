@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/css;charset=utf-8">
+<!-- upload java script pacakges -->
+<div class="chart-container" style="position: relative; height:450px; width:600px">
+	<canvas id="myChart" width =300 height=200></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/jquery.csv.js"></script>
+<script type="text/javascript">
+	// aquire snow_depth data
+	var uv_data;
+	      $.ajax({
+	          type : "GET",
+	          url: "data/snow_depth.csv",
+	          dataType: "text",
+	          async:false,   
+	          success: function(response)  
+	          {
+	            uv_data = $.csv.toObjects(response);
+	          }   
+	        });
+	var date = []
+	var nature_depth = []
+	var avg_depth_in_snow_making_area = []
+	// push data into list
+	uv_data.forEach(function(d){
+		date.push(d.date);
+		// Only integers are kept for snow depth data
+		nature_depth.push(Math.round(d.Nature));
+		avg_depth_in_snow_making_area.push(Math.round(d.Average_depth_in_snow_making_area))
+	});
+	// setting line chart into "myChart" canvas
+	var ctx = document.getElementById('myChart').getContext('2d');
+	// setting default font family
+	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	// crete line chart
+	var chart = new Chart(ctx, {
+	    type: 'line',
+	     data: {
+	     	labels: date,
+	     	datasets: [{
+	     		label: 'Snow Depth(cm): ',
+	            backgroundColor: "rgba(185,225,255,0.4)",
+	            hoverBackgroundColor: 'rgba(166, 217, 255, 1)',
+	            borderWidth: 1,
+	            borderColor: 'rgba(128, 200, 255, 1)',
+	            hoverBorderWidth: 2,
+            	data: nature_depth
+        	}
+        	],
+        	labels: date,
+	     },
+		options: {
+			    legend: {
+			        display: false
+			    },
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    suggestedMin: 0,
+		                },
+		                scaleLabel: {
+					        display: true,
+					        labelString: 'Snow Depth(cm)'
+					      }
+		            }]
+		        }
+		    },
+	});
+</script>
