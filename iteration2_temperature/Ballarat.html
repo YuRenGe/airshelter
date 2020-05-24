@@ -5,10 +5,12 @@
 <div class="chart-container" style="position: relative; height:450px; width:600px">
 	<canvas id="myChart" width =300 height=200></canvas>
 </div>
+<!-- upload java script packages -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/jquery.csv.js"></script>
 <script type="text/javascript">
+	// aquire temperature data
 	var temp_data;
 	      $.ajax({
 	          type : "GET",
@@ -23,6 +25,7 @@
 	var month = []
 	var avg_max_temp = []
 	var avg_min_temp = []
+	// filter attraction by name
 	function filterByPlace(data, name) {
 	    var filter_data = data.filter(item => item.place == name);
 	    filter_data.forEach(function(d){
@@ -31,17 +34,20 @@
 	    	avg_min_temp.push(d.avg_min_temp)
 	    });
 	}
-	console.log(avg_max_temp)
+	// filter attraction
 	var one_place_data = filterByPlace(temp_data,'Ballarat')
+	// setting chart position
 	var ctx = document.getElementById('myChart').getContext('2d');
 	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	// creat bar chart
 	var chart = new Chart(ctx, {
-	    // The type of chart we want to create
+	    // The type of chart
 	    type: 'bar',
-	    // Configuration options go here
+	    // Configuration options
 	     data: {
 	     	labels: month,
 	     	datasets: [{
+	     		// configue lable, color, border, data sourse etc for average max temperature
 	     		label: 'Average maximum temperature',
 	            backgroundColor: 'rgba(255, 187, 0, 0.5)',
 	            hoverBackgroundColor: 'rgba(252, 143, 0, 0.5)',
@@ -50,6 +56,7 @@
 	            hoverBorderWidth: 2,
             	data: avg_max_temp
         	},{
+        		// configue lable, color, border, data sourse etc for average min temperature
         		label: 'Average minimum temperature',
 	            backgroundColor: 'rgba(0, 130, 214, 0.5)',
 	            hoverBackgroundColor: 'rgba(0, 112, 220, 0.5)',
@@ -70,6 +77,7 @@
 		            }]
 		        },
 		        tooltips: {
+		        	// setting tooltip's information and display method
 		        	custom: function(tooltip) {
 		              if (!tooltip) return;
 		              tooltip.displayColors = false;
