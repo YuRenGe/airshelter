@@ -1,14 +1,15 @@
 
 <!DOCTYPE html>
 <meta http-equiv="content-type" content="text/css;charset=utf-8">
-<!--the graph is designed by Dongfang Zhao at 2020.5.11-->
 <div class="chart-container" style="position: relative; height:450px; width:600px">
 	<canvas id="myChart" width =300 height=200></canvas>
 </div>
+<!-- upload java script packages -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/jquery.csv.js"></script>
 <script type="text/javascript">
+	// aquire data
 	var temp_data;
 	      $.ajax({
 	          type : "GET",
@@ -22,6 +23,7 @@
 	        });
 	var month = []
 	var avg_rainfall = []
+	// filter by attraction name
 	function filterByPlace(data, name) {
 	    var filter_data = data.filter(item => item.attraction == name);
 	    filter_data.forEach(function(d){
@@ -29,16 +31,18 @@
 	    	avg_rainfall.push(Math.round(d.avg_rainfall))
 	    });
 	}
-	console.log(avg_rainfall)
+	// filter data only include Ballarat
 	var one_place_data = filterByPlace(temp_data,'Ballarat')
+	// inital bar chart in 'myChart'
 	var ctx = document.getElementById('myChart').getContext('2d');
 	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
 	var chart = new Chart(ctx, {
-	    // The type of chart we want to create
+	    // setting type of chart
 	    type: 'bar',
-	    // Configuration options go here
+	    // Configuration options
 	     data: {
 	     	labels: month,
+	     	// configue bar chart informations (color, label, data source, border etc.)
 	     	datasets: [{
 	     		label: 'Average rainfall(mm)',
 	            backgroundColor: 'rgba(1, 104, 183, 0.5)',
