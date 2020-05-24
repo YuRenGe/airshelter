@@ -5,10 +5,12 @@
 <div class="chart-container" style="position: relative; height:450px; width:600px">
 	<canvas id="myChart" width =300 height=200></canvas>
 </div>
+<!-- upload Js packages -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/jquery.csv.js"></script>
 <script type="text/javascript">
+	// get data
 	var uv_data;
 	      $.ajax({
 	          type : "GET",
@@ -23,17 +25,12 @@
 	var month = []
 	var avg_max_uv = []
 	var avg_mean_uv = []
+	// convert to interger
 	uv_data.forEach(function(d){
 		avg_max_uv.push(Math.round(d.uv_month_avg_max))
 		avg_mean_uv.push(Math.round(d.uv_month_avg_mean))
 	});
-	// function filterByPlace(data, name) {
-	//     var filter_data = data.filter(item => item.attraction == name);
-	//     filter_data.forEach(function(d){
-	//     	month.push(d.month)
-	//     	avg_rainfall.push(Math.round(d.avg_rainfall))
-	//     });
-	// }
+	// put chart into 'myChart' canvas
 	var ctx = document.getElementById('myChart').getContext('2d');
 	window.chartColors = {
         red: 'rgb(255, 99, 132)',
@@ -45,11 +42,13 @@
         grey: 'rgb(201, 203, 207)'
     };
 	Chart.defaults.global.defaultFontFamily = 'Helvetica Neue';
+	// create chart
 	var chart = new Chart(ctx, {
 	    type: 'bar',
 	     data: {
 	     	labels: month,
 	     	datasets: [{
+	     		// setting color, borader, data source etc for bar chart
 	     		label: 'Average UV',
 	            backgroundColor: ["rgba(228, 39, 33, 0.8)", "rgba(228, 39, 33, 0.8)", "rgba(236, 135, 2, 0.8)", "rgba(253, 243, 1, 0.8)", "rgba(0, 144, 61, 0.8)", "rgba(0, 144, 61, 0.8)",'rgba(0, 144, 61, 0.8)','rgba(0, 144, 61, 0.8)','rgba(253, 243, 1, 0.8)','rgba(253, 243, 1, 0.8)','rgba(236, 135, 2, 0.8)','rgba(228, 39, 33, 0.8)'],
 	            hoverBackgroundColor: 'rgba(121, 48, 120, 0.8)',
@@ -73,6 +72,7 @@
 		            }]
 		        },
 		        backgroundRules: [{
+		        	// setting backgroud color for bar chart
 	                    backgroundColor: 'rgba(0, 144, 61, 0.3)', 
 	                    yAxisSegement: 2.99
 	                }, {
@@ -90,6 +90,7 @@
                 }],
 		    },
 		plugins: [{
+			//using plugins to setting backgroud color to back ground
                 beforeDraw: function (chart) {
                     var rules = chart.chart.options.backgroundRules;
                     var ctx = chart.chart.ctx;
